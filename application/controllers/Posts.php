@@ -59,18 +59,26 @@ class Posts extends CI_Controller
             $config['upload_path'] = './assets/images/posts';
             $config['allowed_types'] = 'gif|jpg|png';
             $config['max_size'] = '2048';
-            $config['max_width'] = '2000';
+            $config['max_width'] = '4000';
             $config['max_height'] = '2000';
 
             $this->load->library('upload', $config);
 
-            if (!$this->upload->do_upload()) {
-                $errors = array('error' => $this->upload->display_errors());
-                dd($errors);
-                $post_image = 'noimage.png';
-            } else {
-                $data = array('upload_data' => $this->upload->data());
-                $post_image = $_FILES['userfile']['name'];
+			if (empty($_FILES['userfile']['name'])) {
+                $post_image="noimage.png";
+            }
+
+			else{
+            	if (!$this->upload->do_upload()) {
+                    $data['upload_error'] = $this->upload->display_errors();
+                    $data['upload_status'] = 'error'; 
+                    $this->load->view('templates/header');
+                    $this->load->view('posts/create', $data);
+                    $this->load->view('templates/footer');
+                } else {
+                    $data = array('upload_data' => $this->upload->data());
+                    $post_image = $_FILES['userfile']['name'];
+                }
             }
 
             // Set message
