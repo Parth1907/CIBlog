@@ -1,3 +1,9 @@
+<?php if (isset($upload_status) && $upload_status === 'error') : ?>
+    <div class="alert alert-danger">
+        <?php echo $upload_error; ?>
+    </div>
+<?php endif; ?>
+
 <h2>
     <?= $title; ?>
 </h2>
