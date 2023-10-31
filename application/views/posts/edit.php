@@ -25,6 +25,8 @@
         <?php endforeach; ?>
     </select>
 </div>
+
+<!-- Currently the image cant be edited once uploaded -->
 <div class="form-group">
     <label>Upload Image</label>
     <input type="file" name="userfile" size="20">
